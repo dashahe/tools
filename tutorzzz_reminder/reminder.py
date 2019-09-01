@@ -2,6 +2,8 @@ import json
 import requests
 import config
 
+assignedIdList = list()
+
 def __getList():
     HEADERS = {
         'Cookie': config.tutorzzzCookie,
@@ -23,12 +25,13 @@ def __filter():
     if assignList == None:
         return
     for al in assignList:
-        if al['orderStatus'] == '招募中':
+        if al['orderStatus'] == '招募中' and al['id'] not in assignedIdList:
             d = {}
             d['id'] = al['id']
             d['title'] = al['title']
             d['devPrice'] = al['devPrice']
             wanted.append(d)
+            assignedIdList.append(d['id'])
     return wanted
 
 def remind():
